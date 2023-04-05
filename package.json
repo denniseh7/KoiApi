@@ -1,0 +1,44 @@
+{
+  "name": "koiapi",
+  "version": "1.0.0",
+  "description": "SDC Ratings and Reviews backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "server-dev": "npx nodemon --watch src src/index.js",
+    "start": "node src/index.js",
+    "eslint-build": "npx eslint --init"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AquariumSDC/KoiApi.git"
+  },
+  "keywords": [
+    "express",
+    "postgresql",
+    "jest",
+    "supertest",
+    "node.js"
+  ],
+  "author": "Dennis Hsu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AquariumSDC/KoiApi/issues"
+  },
+  "homepage": "https://github.com/AquariumSDC/KoiApi#readme",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jest": "^29.5.0",
+    "pg": "^8.10.0",
+    "supertest": "^6.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.37.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "live-server": "^1.1.0",
+    "nodemon": "^2.0.22"
+  }
+}
