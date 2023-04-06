@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "server-dev": "npx nodemon --watch server server/index.js",
-    "start": "node server/index.js",
+    "server-dev": "npx nodemon --watch server server/app.js",
+    "start:es6": "npx babel-node ./server/app.js",
+    "start": "node server/app.js",
     "eslint-build": "npx eslint --init"
   },
   "repository": {
@@ -36,6 +37,8 @@
     "supertest": "^6.3.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/node": "^7.20.7",
     "eslint": "^8.37.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
