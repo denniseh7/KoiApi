@@ -1,7 +1,7 @@
 const postgres = require('postgres');
 require('dotenv').config({ path: '../.env' });
 // trying postgres.js instead of node-postgres(pg) first
-console.log('dotenv', process.env.PORT);
+// console.log('dotenv', process.env.PORT);
 
 const sql = postgres('postgres://username:password@http:/host:port/database', {
   host: process.env.DB_HOST,
@@ -11,26 +11,26 @@ const sql = postgres('postgres://username:password@http:/host:port/database', {
   password: process.env.DB_PASS,
 });
 
-async function getReviews() {
-  try {
-    const response = await sql`
-    select
-      id,
-      reviewer_name
-    from reviews
-    limit 5
-    `;
-    return response;
-  } catch (err) {
-    console.log('Error', err);
-    return [];
-  }
-}
+// async function getReviews() {
+//   try {
+//     const response = await sql`
+//     select
+//       id,
+//       reviewer_name
+//     from reviews,
+//     limit 5
+//     `;
+//     return response;
+//   } catch (err) {
+//     console.log('Error', err);
+//     return [];
+//   }
+// }
 
-getReviews()
-  .then((res) => {
-    console.log('Response', res);
-    sql.end();
-  });
+// getReviews()
+//   .then((res) => {
+//     console.log('Response', res);
+//     sql.end();
+//   });
 
-console.log('hello world');
+exports.sql = sql;
