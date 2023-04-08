@@ -43,10 +43,15 @@ CREATE TABLE IF NOT EXISTS characteristic_reviews (
       ON DELETE CASCADE
 );
 
-COPY characteristic_reviews(id,characteristic_id,review_id,value)
-FROM '/Users/sdcImport/characteristic_reviews.csv'
-DELIMITER ','
-CSV HEADER;
+-- Indexes
+CREATE INDEX helpful ON reviews (
+  helpfulness DESC NULLS LAST
+);
+
+-- COPY characteristic_reviews(id,characteristic_id,review_id,value)
+-- FROM '/Users/sdcImport/characteristic_reviews.csv'
+-- DELIMITER ','
+-- CSV HEADER;
 
 -- COPY reviews_photos(id,review_id,url)
 -- FROM '/Users/sdcImport/reviews_photos.csv'
