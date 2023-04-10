@@ -6,7 +6,7 @@ module.exports = {
   }) => {
     console.log('in models get');
     let pageNum = 0;
-    if (page !== '0') { pageNum = (Number(page) - 1) * Number(count); }
+    if (Number(page !== 0)) { pageNum = (Number(page) - 1) * Number(count); }
 
     let sortField = 'date DESC';
     if (sort === 'helpful') {
@@ -16,15 +16,18 @@ module.exports = {
     }
     console.log('Offset page is:', pageNum, 'page:', page);
     return sql`
-      select id as review_id,
+      select reviews.id as review_id,
         rating,
         summary,
         recommend,
         response,
         body,
-        date,
+        to_char(to_timestamp(date/1000), 'YYYY-MM-DD"T"HH:MI:SS.MS"Z"') as date,
         reviewer_name,
-        helpfulness
+        helpfulness,
+        ARRAY(select json_build_object('id', id, 'url', url)
+          from reviews_photos
+          where reviews.id=review_id) as photos
       from reviews
       where product_id=${productId}
       order by ${sortField}
