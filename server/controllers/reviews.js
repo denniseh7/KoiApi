@@ -21,6 +21,7 @@ module.exports = {
       console.log('data:', data);
       res.status(200).send(data);
     } catch (err) {
+      console.log('Error', err);
       res.status(500).send(`Error getting reviews: ${err}`);
     }
   },
