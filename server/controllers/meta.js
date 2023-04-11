@@ -17,8 +17,8 @@ module.exports = {
       const data = {
         product: req.query.product_id,
         ratings: ratings[0].ratings,
-        recommend: recommends,
-        characteristics: charsData,
+        recommend: recommends[0].recs,
+        characteristics: charsData[0].chars,
       };
       console.log('data:', data);
       res.status(200).send(data);
