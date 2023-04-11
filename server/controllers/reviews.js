@@ -25,4 +25,20 @@ module.exports = {
       res.status(500).send(`Error getting reviews: ${err}`);
     }
   },
+  // TODO: Post review
+  // post: async (req, res) => {
+  //   console.log(req.body);
+  // }
 };
+
+// const test_data = {
+//   "product_id": 40344,
+//   "rating": 4,
+//   "summary": "test summary",
+//   "body": "test body",
+//   "recommend": false,
+//   "name": "test name",
+//   "email": "test email",
+//   "photos": ["test_url_photo1", "test_url_photo2"],
+//   "characteristics": {"135219": 5, "135220": 3, "135221": 2, "135222": 1}
+// }

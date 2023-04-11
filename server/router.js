@@ -6,6 +6,6 @@ router.get('/reviews', controller.reviews.get); // get reviews
 
 router.get('/reviews/meta', controller.meta.get);
 
-// router.put('/:review_id/helpful', controller.markReview.markHelpful);
-// router.put('/:review_id/report', controller.markReview.report);
+router.put('/reviews/:review_id/helpful', controller.markReview.markHelpful);
+router.put('/reviews/:review_id/report', controller.markReview.report);
 module.exports = router;
