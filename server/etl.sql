@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   id SERIAL PRIMARY KEY,
   product_id INTEGER NOT NULL,
   rating SMALLINT NOT NULL,
-  date BIGINT NOT NULL,
+  date VARCHAR NOT NULL,
   summary VARCHAR,
   body VARCHAR,
   recommend BOOLEAN,
@@ -44,9 +44,9 @@ CREATE TABLE IF NOT EXISTS characteristic_reviews (
 );
 
 -- Indexes
-CREATE INDEX helpful ON reviews (
-  helpfulness DESC NULLS LAST
-);
+-- CREATE INDEX helpful ON reviews (
+--   helpfulness DESC NULLS LAST
+-- );
 
 -- COPY characteristic_reviews(id,characteristic_id,review_id,value)
 -- FROM '/Users/sdcImport/characteristic_reviews.csv'

@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 // router
-app.use('/reviews', router);
+app.use('/', router);
 
 // create Port and listen
 const PORT = process.env.PORT || 3000;
