@@ -2,7 +2,7 @@ const router = require('express').Router();
 const controller = require('./controllers');
 
 router.get('/reviews', controller.reviews.get); // get reviews
-// router.post('/', controller.reviews.post); // post reviews
+router.post('/reviews', controller.reviews.post); // post reviews
 
 router.get('/reviews/meta', controller.meta.get);
 

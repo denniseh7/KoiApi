@@ -35,4 +35,28 @@ module.exports = {
       offset ${pageNum}
       `;
   },
+  create: async ({
+    product_id, rating, summary, body, recommend, name,
+    email, photos, characteristics,
+  }) => {
+    console.log('in models post');
+    return sql`
+      WITH insReview AS (
+        INSERT INTO reviews(product_id, rating, summary, body, recommend, reviewer_name, reviewer_email,
+          helpfulness)
+        VALUES (
+          ${product_id}, ${rating}, ${summary}, ${body}, ${recommend}, ${name}, ${email}, 0
+        )
+        RETURNING id
+      ), insPhoto AS (
+        INSERT INTO reviews_photos(review_id, url)
+        VALUES((SELECT id FROM insReview), unnest(${photos}::text[]))
+      )
+      INSERT INTO characteristic_reviews(review_id, characteristic_id, value)
+      SELECT (SELECT id FROM insReview), charObj.key::INTEGER, charObj.charVal::INTEGER
+      FROM (
+        SELECT key, value as charVal FROM json_each_text(${characteristics})
+      ) charObj
+    `;
+  },
 };

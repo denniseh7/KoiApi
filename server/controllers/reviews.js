@@ -26,9 +26,23 @@ module.exports = {
     }
   },
   // TODO: Post review
-  // post: async (req, res) => {
-  //   console.log(req.body);
-  // }
+  post: async (req, res) => {
+    const expectedKeys = ['product_id', 'rating', 'summary', 'body', 'recommend', 'name',
+      'email', 'photos', 'characteristics'];
+    const keyCheck = expectedKeys.every(
+      (key) => Object.prototype.hasOwnProperty.call(req.body, key),
+    );
+    if (!keyCheck) {
+      res.status(500).send(`Invalid body properties: Need ${expectedKeys}`);
+    }
+    try {
+      await models.reviews.create(req.body);
+      res.status(201).send(`Created new review from ${JSON.stringify(req.body)}`);
+    } catch (err) {
+      console.log('Error Posting', err);
+      res.status(500).send(`Error posting reviews: ${err}`);
+    }
+  },
 };
 
 // const test_data = {
@@ -38,7 +52,23 @@ module.exports = {
 //   "body": "test body",
 //   "recommend": false,
 //   "name": "test name",
-//   "email": "test email",
+//   "email": "testemail@test.com",
 //   "photos": ["test_url_photo1", "test_url_photo2"],
 //   "characteristics": {"135219": 5, "135220": 3, "135221": 2, "135222": 1}
+// }
+// {
+//   "product_id": 40347,
+//   "rating": 4,
+//   "summary": "testSummary",
+//   "body": "testBody",
+//   "recommend": true,
+//   "name": "John Doe",
+//   "email": "testemail@test.com",
+//   "photos": [
+//       "urlLink",
+//       "https://example.com/photo2.jpg"
+//   ],
+//   "characteristics": {
+//       "135250": 4
+//   }
 // }
