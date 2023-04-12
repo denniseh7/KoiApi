@@ -1,16 +1,16 @@
 -- CALL DROP TABLE IF EXISTS if needed
 
 CREATE TABLE IF NOT EXISTS characteristics (
-  id SERIAL PRIMARY KEY,
-  product_id INTEGER NOT NULL,
-  name VARCHAR(255) NOT NULL
+  id BIGSERIAL PRIMARY KEY,
+  product_id BIGINT NOT NULL,
+  name VARCHAR NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS reviews (
-  id SERIAL PRIMARY KEY,
-  product_id INTEGER NOT NULL,
+  id BIGSERIAL PRIMARY KEY,
+  product_id BIGINT NOT NULL,
   rating SMALLINT NOT NULL,
-  date VARCHAR NOT NULL,
+  date BIGINT DEFAULT extract(epoch from now()),
   summary VARCHAR,
   body VARCHAR,
   recommend BOOLEAN,
@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS reviews (
 );
 
 CREATE TABLE IF NOT EXISTS reviews_photos (
-  id SERIAL PRIMARY KEY,
-  review_id INTEGER NOT NULL,
+  id BIGSERIAL PRIMARY KEY,
+  review_id BIGINT NOT NULL,
   url VARCHAR,
   CONSTRAINT fk_review_id
     FOREIGN KEY(review_id)
@@ -33,9 +33,9 @@ CREATE TABLE IF NOT EXISTS reviews_photos (
 
 
 CREATE TABLE IF NOT EXISTS characteristic_reviews (
-  id SERIAL PRIMARY KEY,
-  characteristic_id INTEGER NOT NULL,
-  review_id INTEGER NOT NULL,
+  id BIGSERIAL PRIMARY KEY,
+  characteristic_id BIGINT NOT NULL,
+  review_id BIGINT NOT NULL,
   value INTEGER,
   CONSTRAINT fk_char_id
     FOREIGN KEY(characteristic_id)
@@ -43,20 +43,31 @@ CREATE TABLE IF NOT EXISTS characteristic_reviews (
       ON DELETE CASCADE
 );
 
+-- CREATE TABLE IF NOT EXISTS temp_characteristic_reviews (
+--   id BIGSERIAL PRIMARY KEY,
+--   characteristic_id INTEGER NOT NULL,
+--   review_id INTEGER NOT NULL,
+--   value INTEGER,
+--   CONSTRAINT fk_char_id
+--     FOREIGN KEY(characteristic_id)
+--       REFERENCES characteristics(id)
+--       ON DELETE CASCADE
+-- );
+
 -- Indexes
 -- CREATE INDEX helpful ON reviews (
 --   helpfulness DESC NULLS LAST
 -- );
 
--- COPY characteristic_reviews(id,characteristic_id,review_id,value)
+-- COPY characteristic_reviews(id, characteristic_id,review_id,value)
 -- FROM '/Users/sdcImport/characteristic_reviews.csv'
 -- DELIMITER ','
 -- CSV HEADER;
 
--- COPY reviews_photos(id,review_id,url)
--- FROM '/Users/sdcImport/reviews_photos.csv'
--- DELIMITER ','
--- CSV HEADER;
+COPY reviews_photos(id,review_id,url)
+FROM '/Users/sdcImport/reviews_photos.csv'
+DELIMITER ','
+CSV HEADER;
 
 -- COPY reviews(id,product_id,rating,date,summary,body,recommend,reported,reviewer_name,reviewer_email,response, helpfulness)
 -- FROM '/Users/sdcImport/reviews.csv'
