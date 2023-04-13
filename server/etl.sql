@@ -43,6 +43,16 @@ CREATE TABLE IF NOT EXISTS characteristic_reviews (
       ON DELETE CASCADE
 );
 
+-- Indexes
+CREATE INDEX IF NOT EXISTS char_index ON characteristics (product_id);
+CREATE INDEX IF NOT EXISTS review_prod_index ON reviews(product_id);
+CREATE INDEX IF NOT EXISTS review_help_index ON reviews(helpfulness DESC NULLS LAST);
+CREATE INDEX IF NOT EXISTS review_date_index ON reviews(date DESC NULLS LAST);
+CREATE INDEX IF NOT EXISTS photo_index ON reviews_photos(review_id);
+CREATE INDEX IF NOT EXISTS char_review_index ON characteristic_reviews(characteristic_id);
+
+-- DROP INDEX IF EXISTS review_help_date_index;
+
 -- CREATE TABLE IF NOT EXISTS temp_characteristic_reviews (
 --   id BIGSERIAL PRIMARY KEY,
 --   characteristic_id INTEGER NOT NULL,
@@ -54,20 +64,17 @@ CREATE TABLE IF NOT EXISTS characteristic_reviews (
 --       ON DELETE CASCADE
 -- );
 
--- Indexes
--- CREATE INDEX helpful ON reviews (
---   helpfulness DESC NULLS LAST
--- );
+
 
 -- COPY characteristic_reviews(id, characteristic_id,review_id,value)
 -- FROM '/Users/sdcImport/characteristic_reviews.csv'
 -- DELIMITER ','
 -- CSV HEADER;
 
-COPY reviews_photos(id,review_id,url)
-FROM '/Users/sdcImport/reviews_photos.csv'
-DELIMITER ','
-CSV HEADER;
+-- COPY reviews_photos(id,review_id,url)
+-- FROM '/Users/sdcImport/reviews_photos.csv'
+-- DELIMITER ','
+-- CSV HEADER;
 
 -- COPY reviews(id,product_id,rating,date,summary,body,recommend,reported,reviewer_name,reviewer_email,response, helpfulness)
 -- FROM '/Users/sdcImport/reviews.csv'
@@ -78,3 +85,6 @@ CSV HEADER;
 -- FROM '/Users/sdcImport/characteristics.csv'
 -- DELIMITER ','
 -- CSV HEADER;
+
+-- -- Change serial ID to proper last value due to ETL not incrementing the ID due to direct ID import
+-- select setval('characteristic_reviews_id_seq', max(id)) from characteristic_reviews;

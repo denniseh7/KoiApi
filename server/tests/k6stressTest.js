@@ -10,9 +10,9 @@ export const options = {
     stress: {
       executor: 'constant-arrival-rate',
       duration: '30s',
-      rate: 1,
+      rate: 1000,
       timeUnit: '1s',
-      preAllocatedVUs: 10,
+      preAllocatedVUs: 3000,
     },
   },
 };
