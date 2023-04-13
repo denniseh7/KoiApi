@@ -43,6 +43,16 @@ CREATE TABLE IF NOT EXISTS characteristic_reviews (
       ON DELETE CASCADE
 );
 
+-- Indexes
+CREATE INDEX IF NOT EXISTS char_index ON characteristics (product_id);
+CREATE INDEX IF NOT EXISTS review_prod_index ON reviews(product_id);
+CREATE INDEX IF NOT EXISTS review_help_index ON reviews(helpfulness DESC NULLS LAST);
+CREATE INDEX IF NOT EXISTS review_date_index ON reviews(date DESC NULLS LAST);
+CREATE INDEX IF NOT EXISTS photo_index ON reviews_photos(review_id);
+CREATE INDEX IF NOT EXISTS char_review_index ON characteristic_reviews(characteristic_id);
+
+-- DROP INDEX IF EXISTS review_help_date_index;
+
 -- CREATE TABLE IF NOT EXISTS temp_characteristic_reviews (
 --   id BIGSERIAL PRIMARY KEY,
 --   characteristic_id INTEGER NOT NULL,
@@ -54,10 +64,7 @@ CREATE TABLE IF NOT EXISTS characteristic_reviews (
 --       ON DELETE CASCADE
 -- );
 
--- Indexes
--- CREATE INDEX helpful ON reviews (
---   helpfulness DESC NULLS LAST
--- );
+
 
 -- COPY characteristic_reviews(id, characteristic_id,review_id,value)
 -- FROM '/Users/sdcImport/characteristic_reviews.csv'

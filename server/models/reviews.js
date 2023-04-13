@@ -4,7 +4,6 @@ module.exports = {
   get: async ({
     productId, page = 0, count = 5, sort = 'newest',
   }) => {
-    console.log('in models get');
     let pageNum = 0;
     if (Number(page !== 0)) { pageNum = (Number(page) - 1) * Number(count); }
 
@@ -14,7 +13,7 @@ module.exports = {
     } else if (sort === 'relevant') {
       sortField = 'helpfulness DESC, date DESC';
     }
-    console.log('Offset page is:', pageNum, 'page:', page);
+    // console.log('Offset page is:', pageNum, 'page:', page);
     return sql`
       select reviews.id as review_id,
         rating,
@@ -38,9 +37,7 @@ module.exports = {
   create: async ({
     product_id, rating, summary, body, recommend, name,
     email, photos, characteristics,
-  }) => {
-    console.log('in models post');
-    return sql`
+  }) => sql`
       WITH insReview AS (
         INSERT INTO reviews(product_id, rating, summary, body, recommend, reviewer_name, reviewer_email,
           helpfulness)
@@ -57,6 +54,6 @@ module.exports = {
       FROM (
         SELECT key, value as charVal FROM json_each_text(${characteristics})
       ) charObj
-    `;
-  },
+    `
+  ,
 };
